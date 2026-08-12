@@ -1,4 +1,51 @@
+import { useState } from "react";
+
 export default function App() {
+  const [uploading, setUploading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const [assignments, setAssignments] = useState([
+  {
+    name: "EWEM Pledge",
+    file: "ewem-pledge.pdf",
+  },
+  {
+    name: "EWEM Crossword Puzzle",
+    file: "ewem-crossword-puzzle.pdf",
+  },
+]);
+
+  const handleUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    setMessage("Uploading...");
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setMessage(`✅ ${data.file} uploaded successfully`);
+      } else {
+        setMessage("❌ Upload failed");
+      }
+    } catch (error) {
+      setMessage("❌ Upload failed");
+    }
+
+    setUploading(false);
+  };
+
+  
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#050816] text-white">
       {/* Glowing background */}
@@ -59,7 +106,7 @@ export default function App() {
             </a>
 
             <a
-              href="mailto:darpanphadke4@gmail.com"
+              href="#contact"
               className="rounded-2xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white backdrop-blur transition hover:-translate-y-1 hover:bg-white/10"
             >
               Contact Me
@@ -190,7 +237,7 @@ export default function App() {
                 </div>
 
                 <p className="mt-3 text-sm leading-6 text-zinc-300">
-                  A cloud-based file storage application with user authentication and Azure Blob Storage integration for secure upload and download management.
+                  A cloud-based file storage application with user authentication and Azure Blob Storage integration for secure upload and download management. A cloud storage system
                 </p>
 
                 <div className="mt-4 flex flex-wrap gap-2 text-xs text-zinc-300">
@@ -201,18 +248,12 @@ export default function App() {
 
                 <div className="mt-6 flex gap-3">
                   <a
-                    href="https://github.com/darpanphadke4-code"
+                    href="https://github.com/darpanphadke4-code/CloudVault"
                     target="_blank"
                     rel="noreferrer"
                     className="flex-1 rounded-xl bg-purple-500 px-4 py-2 text-center text-sm font-semibold text-white transition hover:bg-purple-400"
                   >
                     GitHub
-                  </a>
-                  <a
-                    href="#"
-                    className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-center text-sm font-semibold text-white transition hover:bg-white/10"
-                  >
-                    Demo
                   </a>
                 </div>
               </div>
@@ -249,12 +290,6 @@ export default function App() {
                   >
                     GitHub
                   </a>
-                  <a
-                    href="#"
-                    className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-center text-sm font-semibold text-white transition hover:bg-white/10"
-                  >
-                    Demo
-                  </a>
                 </div>
               </div>
             </div>
@@ -265,14 +300,14 @@ export default function App() {
 
               <div className="p-6">
                 <div className="flex items-center justify-between gap-3">
-                  <h3 className="text-xl font-bold text-white">MediBooth</h3>
+                  <h3 className="text-xl font-bold text-white">E - Portfolio</h3>
                   <span className="rounded-full border border-fuchsia-400/20 bg-fuchsia-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-fuchsia-200">
                     Frontend
                   </span>
                 </div>
 
                 <p className="mt-3 text-sm leading-6 text-zinc-300">
-                  A responsive campus medical assistance portal with emergency support, interactive SVG maps, and a modern Tailwind CSS user interface optimized for mobile devices.
+                  An interactive website that shows my e-portfolio and helps me to connect with omore people like me and help me to stand out in front of others. One of the useful app
                 </p>
 
                 <div className="mt-4 flex flex-wrap gap-2 text-xs text-zinc-300">
@@ -283,18 +318,12 @@ export default function App() {
 
                 <div className="mt-6 flex gap-3">
                   <a
-                    href="https://github.com/darpanphadke4-code"
+                    href="https://github.com/darpanphadke4-code/e-portfolio"
                     target="_blank"
                     rel="noreferrer"
                     className="flex-1 rounded-xl bg-fuchsia-500 px-4 py-2 text-center text-sm font-semibold text-white transition hover:bg-fuchsia-400"
                   >
                     GitHub
-                  </a>
-                  <a
-                    href="#"
-                    className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-center text-sm font-semibold text-white transition hover:bg-white/10"
-                  >
-                    Demo
                   </a>
                 </div>
               </div>
@@ -303,64 +332,153 @@ export default function App() {
         </div>
       </section>
             {/* Academic E-Portfolio Section */}
-      <section id="academic" className="px-4 py-16 sm:py-20">
-        <div className="mx-auto max-w-4xl">
-          <div className="text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-400">
-              Academic E-Portfolio
-            </p>
+      ```jsx
+{/* Academic E-Portfolio Section */}
+<section id="academic" className="px-4 py-16 sm:py-20">
+  <div className="mx-auto max-w-5xl">
+    {/* Header */}
+    <div className="text-center">
+      <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-400">
+        Academic E-Portfolio
+      </p>
 
-            <h2 className="mt-4 text-3xl font-black sm:text-4xl">
-              EWEM Assignments
-            </h2>
+      <h2 className="mt-4 text-3xl font-black sm:text-4xl">
+        EWEM Assignments
+      </h2>
 
-            <p className="mx-auto mt-5 max-w-2xl px-2 text-sm leading-7 text-zinc-300 sm:text-base">
-              A dedicated section for my Environmental and Waste Engineering Management (EWEM) assignments and activity submissions.
-            </p>
-          </div>
+      <p className="mx-auto mt-5 max-w-2xl px-2 text-sm leading-7 text-zinc-300 sm:text-base">
+        Environmental and Waste Engineering Management assignments,
+        activities, and submissions organized in a clean frontend-only
+        portfolio.
+      </p>
+    </div>
 
-          <div className="mt-10">
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur transition duration-300 hover:-translate-y-2 hover:border-green-400/30 hover:bg-white/10">
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <h3 className="text-2xl font-bold text-white">
-                    🌱 EWEM
-                  </h3>
-                  <p className="mt-2 text-sm text-zinc-300">
-                    Environmental and Waste Engineering Management
-                  </p>
-                </div>
+    {/* Main Card */}
+    <div className="mt-10 rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur-xl sm:p-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h3 className="text-2xl font-bold text-white">
+            🌱 EWEM
+          </h3>
 
-                <span className="rounded-full border border-green-400/20 bg-green-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-green-200">
-                  Subject
-                </span>
-              </div>
+          <p className="mt-2 text-sm text-zinc-300">
+            Environmental and Waste Engineering Management
+          </p>
+        </div>
 
-              <p className="mt-4 text-sm leading-6 text-zinc-300">
-                This section contains my EWEM course assignments and activity-based submissions organized in a simple frontend-only e-portfolio.
+        <span className="w-fit rounded-full border border-green-400/20 bg-green-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-green-200">
+          Semester 5
+        </span>
+      </div>
+
+      {/* Assignment List */}
+      <div className="mt-8 space-y-4">
+
+        {/* EWEM Pledge */}
+        <div className="rounded-2xl border border-white/10 bg-[#0a1022]/70 p-4 transition hover:border-cyan-400/20 hover:bg-[#0d1428]">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="font-semibold text-white">
+                📄 EWEM Pledge
               </p>
 
-              <div className="mt-6 space-y-3">
-                <a
-                  href="#"
-                  className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-zinc-200 transition hover:bg-white/10 hover:text-white"
-                >
-                  <span>📄 EWEM Pledge</span>
-                  <span className="text-xs text-zinc-400">View</span>
-                </a>
+              <p className="mt-1 text-xs text-zinc-400">
+                Environmental awareness pledge submission
+              </p>
+            </div>
 
-                <a
-                  href="#"
-                  className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-zinc-200 transition hover:bg-white/10 hover:text-white"
-                >
-                  <span>🧩 EWEM Crossword Puzzle</span>
-                  <span className="text-xs text-zinc-400">View</span>
-                </a>
-              </div>
+            <div className="flex gap-2">
+              <a
+                href="/assignments/ewem/ewem-pledge.png"
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-xs font-semibold text-cyan-200 transition hover:bg-cyan-400/20"
+              >
+                👁 View
+              </a>
+
+              <a
+                href="/assignments/ewem/ewem-pledge.png"
+                download
+                className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/10"
+              >
+                ⬇ Download
+              </a>
             </div>
           </div>
         </div>
-      </section>
+
+        {/* EWEM Crossword */}
+        <div className="rounded-2xl border border-white/10 bg-[#0a1022]/70 p-4 transition hover:border-cyan-400/20 hover:bg-[#0d1428]">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="font-semibold text-white">
+                🧩 EWEM Crossword Puzzle
+              </p>
+
+              <p className="mt-1 text-xs text-zinc-400">
+                E-waste and environmental management crossword activity
+              </p>
+            </div>
+
+            <div className="flex gap-2">
+              <a
+                href="/assignments/ewem/ewem-crossword-puzzle.png"
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-xs font-semibold text-cyan-200 transition hover:bg-cyan-400/20"
+              >
+                👁 View
+              </a>
+
+              <a
+                href="/assignments/ewem/ewem-crossword-puzzle.png"
+                download
+                className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/10"
+              >
+                ⬇ Download
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Upload Section */}
+      <div className="mt-8 rounded-2xl border border-dashed border-white/10 bg-white/5 p-5">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="font-semibold text-white">
+              ➕ Add More Assignments
+            </p>
+
+            <p className="mt-1 text-xs text-zinc-400">
+              Upload a new EWEM PDF assignment to your GitHub repository.
+            </p>
+          </div>
+
+          <label className="inline-flex cursor-pointer items-center justify-center rounded-xl bg-purple-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-purple-400">
+            {uploading ? "Uploading..." : "📤 Upload PDF"}
+
+            <input
+              type="file"
+              accept=".pdf,.png,.jpg,.jpeg"
+              onChange={handleUpload}
+              className="hidden"
+            />
+          </label>
+        </div>
+
+        {message && (
+          <p className="mt-4 text-sm text-zinc-300">
+            {message}
+          </p>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
+```
+
             {/* Contact Section */}
       <section id="contact" className="px-4 py-16 sm:py-20">
         <div className="mx-auto max-w-6xl">
@@ -421,45 +539,71 @@ export default function App() {
               </div>
 
               {/* Right Side Form */}
-              <form className="space-y-5">
-                <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-                  <div>
-                    <label className="mb-2 block text-sm font-medium text-zinc-200">Name</label>
+              <form
+                action="https://formsubmit.co/darpanphadke4@gmail.com"
+                method="POST"
+                className="space-y-5"
+              >
+                <input type="hidden" name="_subject" value="New Portfolio Message" />
+                <input type="hidden" name="_captcha" value="false" />
+
+                {/* Name + Email */}
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div className="group">
+                    <label className="mb-2 block text-sm font-medium text-zinc-300">
+                      Your Name
+                    </label>
                     <input
                       type="text"
-                      placeholder="Your name"
-                      className="w-full rounded-2xl border border-white/10 bg-[#0a1022] px-4 py-3 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-purple-400/50 focus:ring-2 focus:ring-purple-500/20"
+                      name="name"
+                      placeholder="John Doe"
+                      required
+                      className="w-full rounded-2xl border border-white/10 bg-[#0a1022]/80 px-4 py-3 text-sm text-white placeholder:text-zinc-500 outline-none backdrop-blur transition duration-300 focus:border-purple-400 focus:ring-2 focus:ring-purple-500/20 group-hover:border-white/20"
                     />
                   </div>
 
-                  <div>
-                    <label className="mb-2 block text-sm font-medium text-zinc-200">Email</label>
+                  <div className="group">
+                    <label className="mb-2 block text-sm font-medium text-zinc-300">
+                      Email Address
+                    </label>
                     <input
                       type="email"
-                      placeholder="Your email"
-                      className="w-full rounded-2xl border border-white/10 bg-[#0a1022] px-4 py-3 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-purple-400/50 focus:ring-2 focus:ring-purple-500/20"
+                      name="email"
+                      placeholder="you@example.com"
+                      required
+                      className="w-full rounded-2xl border border-white/10 bg-[#0a1022]/80 px-4 py-3 text-sm text-white placeholder:text-zinc-500 outline-none backdrop-blur transition duration-300 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/20 group-hover:border-white/20"
                     />
                   </div>
                 </div>
 
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-zinc-200">Message</label>
+                {/* Message */}
+                <div className="group">
+                  <label className="mb-2 block text-sm font-medium text-zinc-300">
+                    Your Message
+                  </label>
                   <textarea
+                    name="message"
                     rows={6}
-                    placeholder="Tell me about your idea..."
-                    className="w-full resize-none rounded-2xl border border-white/10 bg-[#0a1022] px-4 py-3 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-purple-400/50 focus:ring-2 focus:ring-purple-500/20"
+                    placeholder="Tell me about your project, collaboration, internship opportunity, or idea..."
+                    required
+                    className="w-full resize-none rounded-2xl border border-white/10 bg-[#0a1022]/80 px-4 py-3 text-sm leading-6 text-white placeholder:text-zinc-500 outline-none backdrop-blur transition duration-300 focus:border-purple-400 focus:ring-2 focus:ring-purple-500/20 group-hover:border-white/20"
                   ></textarea>
                 </div>
 
-                <button
-                  type="button"
-                  className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-purple-500 to-indigo-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-purple-500/30 transition hover:-translate-y-1 hover:from-purple-400 hover:to-indigo-400"
-                >
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                  Send Message
-                </button>
+                {/* Submit Button */}
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="text-xs text-zinc-400">
+                    I usually reply within 24–48 hours.
+                  </p>
+
+                  <button
+                    type="submit"
+                    className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-purple-500 via-fuchsia-500 to-cyan-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-purple-500/30 transition duration-300 hover:-translate-y-1 hover:shadow-purple-500/50 active:scale-[0.98]"
+                  >
+                    <span>🚀</span>
+                    Send Message
+                  </button>
+                </div>
               </form>
             </div>
           </div>
