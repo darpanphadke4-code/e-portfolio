@@ -7,11 +7,11 @@ export default function App() {
   const [assignments, setAssignments] = useState([
   {
     name: "EWEM Pledge",
-    file: "ewem-pledge.pdf",
+    file: "ewem-pledge.png",
   },
   {
     name: "EWEM Crossword Puzzle",
-    file: "ewem-crossword-puzzle.pdf",
+    file: "ewem-crossword-puzzle.png",
   },
 ]);
 
@@ -34,10 +34,19 @@ export default function App() {
       const data = await response.json();
 
       if (data.success) {
-        setMessage(`✅ ${data.file} uploaded successfully`);
-      } else {
-        setMessage("❌ Upload failed");
-      }
+      // Add uploaded file to the visible assignment list
+      setAssignments((prev) => [
+        ...prev,
+        {
+          name: data.file.replace(/\\.(pdf|png|jpg|jpeg)$/i, ""),
+          file: data.file,
+        },
+      ]);
+
+      setMessage(`✅ ${data.file} uploaded successfully`);
+    } else {
+      setMessage("❌ Upload failed");
+    }
     } catch (error) {
       setMessage("❌ Upload failed");
     }
@@ -54,21 +63,52 @@ export default function App() {
         <div className="absolute bottom-[-120px] right-[-120px] h-80 w-80 rounded-full bg-cyan-400/20 blur-3xl animate-pulse"></div>
       </div>
 
-      {/* Navbar */}
-      <nav className="fixed top-4 left-1/2 z-50 w-[92%] max-w-md -translate-x-1/2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur-xl shadow-lg">
-        <div className="flex items-center justify-between">
-          <span className="text-sm font-semibold tracking-wide text-white">
+      
+            {/* Navbar */}
+      <nav className="fixed top-4 left-1/2 z-50 w-[94%] max-w-5xl -translate-x-1/2 rounded-2xl border border-white/10 bg-[#0a1022]/80 px-4 py-3 shadow-xl shadow-black/20 backdrop-blur-xl">
+        <div className="flex items-center justify-between gap-4">
+          {/* Logo */}
+          <a
+            href="#home"
+            className="text-sm font-bold tracking-wide text-white sm:text-base"
+          >
             Darpan.dev
-          </span>
+          </a>
 
-          <div className="flex gap-3 text-xs text-zinc-300 sm:gap-4 sm:text-sm">
-            <a href="#about" className="transition hover:text-white">
+          {/* Navigation Links */}
+          <div className="flex items-center gap-2 overflow-x-auto text-xs text-zinc-300 sm:gap-5 sm:text-sm [&::-webkit-scrollbar]:hidden">
+            <a
+              href="#about"
+              className="whitespace-nowrap rounded-lg px-2 py-1 transition hover:bg-white/10 hover:text-white"
+            >
               About
             </a>
-            <a href="#projects" className="transition hover:text-white">
+
+            <a
+              href="#skills"
+              className="whitespace-nowrap rounded-lg px-2 py-1 transition hover:bg-white/10 hover:text-white"
+            >
+              Skills
+            </a>
+
+            <a
+              href="#projects"
+              className="whitespace-nowrap rounded-lg px-2 py-1 transition hover:bg-white/10 hover:text-white"
+            >
               Projects
             </a>
-            <a href="#contact" className="transition hover:text-white">
+
+            <a
+              href="#academic"
+              className="whitespace-nowrap rounded-lg px-2 py-1 transition hover:bg-white/10 hover:text-white"
+            >
+              Academic
+            </a>
+
+            <a
+              href="#contact"
+              className="whitespace-nowrap rounded-lg bg-purple-500/20 px-3 py-1 font-medium text-purple-200 transition hover:bg-purple-500/30 hover:text-white"
+            >
               Contact
             </a>
           </div>
@@ -76,7 +116,9 @@ export default function App() {
       </nav>
 
       {/* Hero Section */}
-      <section className="flex min-h-screen items-center justify-center px-4 py-24 sm:py-28">
+      <section
+      id="home"
+       className="flex min-h-screen items-center justify-center px-4 py-24 sm:py-28">
         <div className="max-w-2xl text-center">
           <div className="inline-flex items-center rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-[10px] font-medium uppercase tracking-[0.25em] text-cyan-300 backdrop-blur sm:text-xs">
             Welcome to my portfolio
@@ -332,151 +374,121 @@ export default function App() {
         </div>
       </section>
             {/* Academic E-Portfolio Section */}
-      ```jsx
-{/* Academic E-Portfolio Section */}
-<section id="academic" className="px-4 py-16 sm:py-20">
-  <div className="mx-auto max-w-5xl">
-    {/* Header */}
-    <div className="text-center">
-      <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-400">
-        Academic E-Portfolio
-      </p>
-
-      <h2 className="mt-4 text-3xl font-black sm:text-4xl">
-        EWEM Assignments
-      </h2>
-
-      <p className="mx-auto mt-5 max-w-2xl px-2 text-sm leading-7 text-zinc-300 sm:text-base">
-        Environmental and Waste Engineering Management assignments,
-        activities, and submissions organized in a clean frontend-only
-        portfolio.
-      </p>
-    </div>
-
-    {/* Main Card */}
-    <div className="mt-10 rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur-xl sm:p-8">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h3 className="text-2xl font-bold text-white">
-            🌱 EWEM
-          </h3>
-
-          <p className="mt-2 text-sm text-zinc-300">
-            Environmental and Waste Engineering Management
-          </p>
-        </div>
-
-        <span className="w-fit rounded-full border border-green-400/20 bg-green-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-green-200">
-          Semester 5
-        </span>
-      </div>
-
-      {/* Assignment List */}
-      <div className="mt-8 space-y-4">
-
-        {/* EWEM Pledge */}
-        <div className="rounded-2xl border border-white/10 bg-[#0a1022]/70 p-4 transition hover:border-cyan-400/20 hover:bg-[#0d1428]">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="font-semibold text-white">
-                📄 EWEM Pledge
-              </p>
-
-              <p className="mt-1 text-xs text-zinc-400">
-                Environmental awareness pledge submission
-              </p>
-            </div>
-
-            <div className="flex gap-2">
-              <a
-                href="/assignments/ewem/ewem-pledge.png"
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-xs font-semibold text-cyan-200 transition hover:bg-cyan-400/20"
-              >
-                👁 View
-              </a>
-
-              <a
-                href="/assignments/ewem/ewem-pledge.png"
-                download
-                className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/10"
-              >
-                ⬇ Download
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* EWEM Crossword */}
-        <div className="rounded-2xl border border-white/10 bg-[#0a1022]/70 p-4 transition hover:border-cyan-400/20 hover:bg-[#0d1428]">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="font-semibold text-white">
-                🧩 EWEM Crossword Puzzle
-              </p>
-
-              <p className="mt-1 text-xs text-zinc-400">
-                E-waste and environmental management crossword activity
-              </p>
-            </div>
-
-            <div className="flex gap-2">
-              <a
-                href="/assignments/ewem/ewem-crossword-puzzle.png"
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-xs font-semibold text-cyan-200 transition hover:bg-cyan-400/20"
-              >
-                👁 View
-              </a>
-
-              <a
-                href="/assignments/ewem/ewem-crossword-puzzle.png"
-                download
-                className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/10"
-              >
-                ⬇ Download
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Upload Section */}
-      <div className="mt-8 rounded-2xl border border-dashed border-white/10 bg-white/5 p-5">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="font-semibold text-white">
-              ➕ Add More Assignments
+      <section id="academic" className="px-4 py-16 sm:py-20">
+        <div className="mx-auto max-w-5xl">
+          {/* Header */}
+          <div className="text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-400">
+              Academic E-Portfolio
             </p>
 
-            <p className="mt-1 text-xs text-zinc-400">
-              Upload a new EWEM PDF assignment to your GitHub repository.
+            <h2 className="mt-4 text-3xl font-black sm:text-4xl">
+              EWEM Assignments
+            </h2>
+
+            <p className="mx-auto mt-5 max-w-2xl px-2 text-sm leading-7 text-zinc-300 sm:text-base">
+              Environmental and Waste Engineering Management assignments,
+              activities, and submissions organized in a clean frontend-only
+              portfolio.
             </p>
           </div>
 
-          <label className="inline-flex cursor-pointer items-center justify-center rounded-xl bg-purple-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-purple-400">
-            {uploading ? "Uploading..." : "📤 Upload PDF"}
+          {/* Main Card */}
+          <div className="mt-10 rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur-xl sm:p-8">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h3 className="text-2xl font-bold text-white">
+                  🌱 EWEM
+                </h3>
 
-            <input
-              type="file"
-              accept=".pdf,.png,.jpg,.jpeg"
-              onChange={handleUpload}
-              className="hidden"
-            />
-          </label>
+                <p className="mt-2 text-sm text-zinc-300">
+                  Environmental and Waste Engineering Management
+                </p>
+              </div>
+
+              <span className="w-fit rounded-full border border-green-400/20 bg-green-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-green-200">
+                Semester 5
+              </span>
+            </div>
+
+                      {/* Assignment List */}
+            <div className="mt-8 space-y-4">
+              {assignments.map((assignment, index) => (
+                <div
+                  key={index}
+                  className="rounded-2xl border border-white/10 bg-[#0a1022]/70 p-4 transition hover:border-cyan-400/20 hover:bg-[#0d1428]"
+                >
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                      <p className="font-semibold text-white">
+                        📄 {assignment.name}
+                      </p>
+
+                      <p className="mt-1 text-xs text-zinc-400">
+                        EWEM assignment document
+                      </p>
+                    </div>
+
+                    <div className="flex gap-2">
+                      {/* View */}
+                      <a
+                        href={`/assignments/ewem/${assignment.file}` }
+                        target="_blank"
+                        rel="noreferrer"
+                        className="rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-xs font-semibold text-cyan-200 transition hover:bg-cyan-400/20"
+                      >
+                        👁 View
+                      </a>
+
+                      {/* Download */}
+                      <a
+                        href={`/assignments/ewem/${assignment.file}` }
+                        download={assignment.file}
+                        className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/10"
+                      >
+                        ⬇ Download
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Upload Section */}
+            <div className="mt-8 rounded-2xl border border-dashed border-white/10 bg-white/5 p-5">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="font-semibold text-white">
+                    ➕ Add More Assignments
+                  </p>
+
+                  <p className="mt-1 text-xs text-zinc-400">
+                    Upload a new EWEM assignment to your GitHub repository.
+                  </p>
+                </div>
+
+                <label className="inline-flex cursor-pointer items-center justify-center rounded-xl bg-purple-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-purple-400">
+                  {uploading ? "Uploading..." : "📤 Upload File"}
+
+                  <input
+                    type="file"
+                    accept=".pdf,.png,.jpg,.jpeg"
+                    onChange={handleUpload}
+                    className="hidden"
+                  />
+                </label>
+              </div>
+
+              {/* Upload Status */}
+              {message && (
+                <p className="mt-4 text-sm text-zinc-300">
+                  {message}
+                </p>
+              )}
+            </div>
+          </div>
         </div>
-
-        {message && (
-          <p className="mt-4 text-sm text-zinc-300">
-            {message}
-          </p>
-        )}
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 ```
 
             {/* Contact Section */}
