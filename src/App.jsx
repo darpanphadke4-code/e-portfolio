@@ -4,7 +4,7 @@ export default function App() {
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const [assignments, setAssignments] = useState([
+const [assignments, setAssignments] = useState([
   {
     name: "EWEM Pledge",
     file: "ewem-pledge.png",
@@ -12,6 +12,14 @@ export default function App() {
   {
     name: "EWEM Crossword Puzzle",
     file: "ewem-crossword-puzzle.png",
+  },
+  {
+    name: "Data Analysis",
+    file: "Data Analysis.pdf",
+  },
+  {
+    name: "Device Anatomy",
+    file: "Device Anatomy.pdf",
   },
 ]);
 
